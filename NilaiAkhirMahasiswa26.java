@@ -2,22 +2,22 @@ import java.util.Scanner;
 
 public class NilaiAkhirMahasiswa26 {
      public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         System.out.println("Program Menghitung Nilai Akhir");
         System.out.println("=============================");
 
         System.out.print("Masukkan Nilai Tugas: ");
-        double tugas = input.nextDouble();
+        double tugas = sc.nextDouble();
 
         System.out.print("Masukkan Nilai Kuis: ");
-        double kuis = input.nextDouble();
+        double kuis = sc.nextDouble();
 
         System.out.print("Masukkan Nilai UTS: ");
-        double uts = input.nextDouble();
+        double uts = sc.nextDouble();
 
         System.out.print("Masukkan Nilai UAS: ");
-        double uas = input.nextDouble();
+        double uas = sc.nextDouble();
 
         // Validasi nilai (0–100)
         if (tugas < 0 || tugas > 100 ||
@@ -28,7 +28,7 @@ public class NilaiAkhirMahasiswa26 {
             System.out.println("=============================");
             System.out.println("nilai tidak valid");
             System.out.println("=============================");
-            return;
+            sc.close();
         }
 
         // Hitung nilai akhir
@@ -67,5 +67,6 @@ public class NilaiAkhirMahasiswa26 {
         System.out.println("Nilai Huruf : " + nilaiHuruf);
         System.out.println("=============================");
         System.out.println(keterangan);
+        return;
     }
 }
