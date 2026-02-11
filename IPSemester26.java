@@ -1,81 +1,78 @@
 import java.util.Scanner;
 
 public class IPSemester26 {
+     // Fungsi konversi nilai huruf ke nilai setara
+    public static double konversiNilai(String huruf) {
+        switch (huruf.toUpperCase()) {
+            case "A":  return 4.0;
+            case "B+": return 3.5;
+            case "B":  return 3.0;
+            case "C+": return 2.5;
+            case "C":  return 2.0;
+            case "D":  return 1.0;
+            case "E":  return 0.0;
+            default:   return -1; 
+        }
+    }
+
     public static void main(String[] args) {
+
         Scanner input = new Scanner(System.in);
 
         System.out.println("Program Menghitung IP Semester");
-        System.out.println("==============================");
+        System.out.println("================================");
 
         System.out.print("Masukkan jumlah mata kuliah: ");
-        int jumlahMK = input.nextInt();
-        input.nextLine(); 
+        int n = input.nextInt();
+        input.nextLine();
 
-        String[] namaMK = new String[jumlahMK];
-        int[] sks = new int[jumlahMK];
-        double[] nilaiAngka = new double[jumlahMK];
-        String[] nilaiHuruf = new String[jumlahMK];
-        double[] nilaiSetara = new double[jumlahMK];
+        String[] namaMK = new String[n];
+        int[] sks = new int[n];
+        String[] nilaiHuruf = new String[n];
+        double[] nilaiSetara = new double[n];
 
-        double totalNilai = 0;
+        double totalBobot = 0;
         int totalSKS = 0;
 
-        for (int i = 0; i < jumlahMK; i++) {
+        for (int i = 0; i < n; i++) {
             System.out.println("\nMata Kuliah ke-" + (i + 1));
-            System.out.print("Nama MK        : ");
+
+            System.out.print("Nama MK     : ");
             namaMK[i] = input.nextLine();
 
-            System.out.print("Bobot SKS      : ");
+            System.out.print("Bobot SKS   : ");
             sks[i] = input.nextInt();
-
-            System.out.print("Nilai Angka    : ");
-            nilaiAngka[i] = input.nextDouble();
             input.nextLine();
 
-            // Konversi nilai
-            if (nilaiAngka[i] > 80) {
-                nilaiHuruf[i] = "A";
-                nilaiSetara[i] = 4.0;
-            } else if (nilaiAngka[i] > 73) {
-                nilaiHuruf[i] = "B+";
-                nilaiSetara[i] = 3.5;
-            } else if (nilaiAngka[i] > 65) {
-                nilaiHuruf[i] = "B";
-                nilaiSetara[i] = 3.0;
-            } else if (nilaiAngka[i] > 60) {
-                nilaiHuruf[i] = "C+";
-                nilaiSetara[i] = 2.5;
-            } else if (nilaiAngka[i] > 50) {
-                nilaiHuruf[i] = "C";
-                nilaiSetara[i] = 2.0;
-            } else if (nilaiAngka[i] > 39) {
-                nilaiHuruf[i] = "D";
-                nilaiSetara[i] = 1.0;
-            } else {
-                nilaiHuruf[i] = "E";
-                nilaiSetara[i] = 0.0;
+            System.out.print("Nilai Huruf : ");
+            nilaiHuruf[i] = input.nextLine();
+
+            nilaiSetara[i] = konversiNilai(nilaiHuruf[i]);
+
+            if (nilaiSetara[i] == -1) {
+                System.out.println("Nilai huruf tidak valid!");
+                return;
             }
 
-            totalNilai += nilaiSetara[i] * sks[i];
+            totalBobot += nilaiSetara[i] * sks[i];
             totalSKS += sks[i];
         }
 
-        double ipSemester = totalNilai / totalSKS;
+        double ip = totalBobot / totalSKS;
 
-        // Output
+        // Output tabel
         System.out.println("\nHasil Konversi Nilai");
         System.out.println("==============================================================");
-        System.out.printf("%-30s %-12s %-12s %-12s%n",
-                "MK", "Nilai Angka", "Nilai Huruf", "Bobot Nilai");
+        System.out.printf("%-30s %-10s %-12s %-12s%n",
+                "MK", "SKS", "Nilai Huruf", "Nilai Setara");
 
-        for (int i = 0; i < jumlahMK; i++) {
-            System.out.printf("%-30s %-12.2f %-12s %-12.2f%n",
-                    namaMK[i], nilaiAngka[i], nilaiHuruf[i], nilaiSetara[i]);
+        for (int i = 0; i < n; i++) {
+            System.out.printf("%-30s %-10d %-12s %-12.2f%n",
+                    namaMK[i], sks[i], nilaiHuruf[i].toUpperCase(), nilaiSetara[i]);
         }
 
         System.out.println("==============================================================");
         System.out.println("Total SKS : " + totalSKS);
-        System.out.printf("IP Semester : %.2f%n", ipSemester);
+        System.out.printf("IP Semester : %.2f%n", ip);
     }
 }
-
